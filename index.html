@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
     <title>Hello, world!</title>
+    <style>
+        img {
+            max-height: 150px;
+            max-width: 150px;
+        }
+    </style>
   </head>
   <body>
     <!-- 
@@ -20,7 +26,7 @@
      -->
 
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light " style="color: white!important;">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -32,22 +38,22 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="backoffice.html">Backoffice</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
+            </li>        
           </ul>
         </div>
       </nav>
 
       <main>
-          <div class="container mt-5">
+          <div class="container mt-5 px-0 ">
+
               <h1 class="text-center"> Our products</h1>
-              <div class="row">
-                  <div class="col-12 col-md-4 col-lg-3">
+            <div class="d-flex mt-5">
+              <div id="spinner" class="spinner-border text-primary mx-auto" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+              <div id=row class="row">
+                  <!-- <div class="col-12 col-md-4 col-lg-3">
                     <div class="card" style="width: 18rem;">
                         <img src="https://via.placeholder.com/150" class="card-img-top img-fluid" alt="...">
                         <div class="card-body">
@@ -59,19 +65,24 @@
                           <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quibusdam necessitatibus vel modi, aut officiis repudiandae repellat asperiores laudantium beatae quam fuga obcaecati magni eius totam ducimus enim blanditiis consequuntur.</p>
                         </div>
                       </div>
-
-                  </div>
+                  </div> -->
               </div>
           </div>
       </main>
       <script>
+          const row = document.getElementById("row")
+          const spinner = document.getElementById("spinner")
+
           window.onload = async () => {
+
+            spinner.classList.toggle("d-none")
+
               try {
               const products = await loadData()
                 displayProducts(products)
                  console.log(products)
-            }
-            catch (error) {
+                 }
+             catch (error) {
                 alert (error.message)
             }
           }
@@ -82,11 +93,27 @@
                 "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMWY1MWIxZjBmYjAwMTVkOTE3OTEiLCJpYXQiOjE2MTkwMDkzNjEsImV4cCI6MTYyMDIxODk2MX0.ImlVBcPHsjaDy0c6wfO0Kybjg-u2nPcdNJtgMQlreVc"
                  }
                 } )
-                const data =  await response.json()
-                return data
+                const products =  await response.json()
+                return products
           }
           const displayProducts = function (products) {
-
+            products.forEach(product => {
+                row.innerHTML +=`<div class="col-12 col-md-4 col-lg-3  ">
+                    <div class="card" style="width: 18rem;">
+                        <img src=${product.imageUrl} class="card-img-top img-fluid" alt="picure of ${product.name}">
+                        <div class="card-body">
+                            <ul>
+                                <li>Name:${product.name}</li>
+                                <li>Brand:${product.brand}</li>
+                                <li>Price:${product.price}$</li>
+                            </ul>
+                            <p class="card-text"> <em> Description : </em> </p>
+                          <p class="card-text" style="height:5rem;overflow-y:scroll">${product.description}</p>
+                        </div>
+                      </div>
+                  </div>`
+                spinner.classList.toggle("d-none")
+            });
           }
       </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
