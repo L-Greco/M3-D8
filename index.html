@@ -1,12 +1,14 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
     <title>Hello, world!</title>
     <style>
@@ -15,8 +17,9 @@
             max-width: 150px;
         }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <!-- 
     "name": "app test 1",  //REQUIRED
     "description": "somthing longer", //REQUIRED
@@ -28,32 +31,33 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light " style="color: white!important;">
         <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="backoffice.html">Backoffice</a>
-            </li>        
-          </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="backoffice.html">Backoffice</a>
+                </li>
+            </ul>
         </div>
-      </nav>
+    </nav>
 
-      <main>
-          <div class="container mt-5 px-0 ">
+    <main>
+        <div class="container mt-5 px-0 ">
 
-              <h1 class="text-center"> Our products</h1>
+            <h1 class="text-center"> Our products</h1>
             <div class="d-flex mt-5">
-              <div id="spinner" class="spinner-border text-primary mx-auto" role="status">
-                <span class="sr-only">Loading...</span>
-              </div>
+                <div id="spinner" class="d-none spinner-border text-primary mx-auto" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
-              <div id=row class="row">
-                  <!-- <div class="col-12 col-md-4 col-lg-3">
+            <div id=row class="row">
+                <!-- <div class="col-12 col-md-4 col-lg-3">
                     <div class="card" style="width: 18rem;">
                         <img src="https://via.placeholder.com/150" class="card-img-top img-fluid" alt="...">
                         <div class="card-body">
@@ -66,39 +70,45 @@
                         </div>
                       </div>
                   </div> -->
-              </div>
-          </div>
-      </main>
-      <script>
-          const row = document.getElementById("row")
-          const spinner = document.getElementById("spinner")
+            </div>
+        </div>
+    </main>
+    <script>
+        const row = document.getElementById("row")
+        const spinner = document.getElementById("spinner")
 
-          window.onload = async () => {
+        window.onload = async () => {
 
-            spinner.classList.toggle("d-none")
+            //spinner.classList.toggle("d-none")
 
-              try {
-              const products = await loadData()
+            try {
+                const products = await loadData()
                 displayProducts(products)
-                 console.log(products)
-                 }
-             catch (error) {
-                alert (error.message)
+                console.log(products)
             }
-          }
-          const loadData = async function () {
-          const response = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
-            headers:   
+            catch (error) {
+                alert(error.message)
+            }
+
+            spinner.classList.add("d-none")
+
+        }
+
+        const loadData = async function () {
+            spinner.classList.remove("d-none")
+            const response = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
+                headers:
                 {
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMWY1MWIxZjBmYjAwMTVkOTE3OTEiLCJpYXQiOjE2MTkwMDkzNjEsImV4cCI6MTYyMDIxODk2MX0.ImlVBcPHsjaDy0c6wfO0Kybjg-u2nPcdNJtgMQlreVc"
-                 }
-                } )
-                const products =  await response.json()
-                return products
-          }
-          const displayProducts = function (products) {
+                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMWY1MWIxZjBmYjAwMTVkOTE3OTEiLCJpYXQiOjE2MTkwMDkzNjEsImV4cCI6MTYyMDIxODk2MX0.ImlVBcPHsjaDy0c6wfO0Kybjg-u2nPcdNJtgMQlreVc"
+                }
+            })
+            const products = await response.json()
+            return products
+        }
+
+        const displayProducts = function (products) {
             products.forEach(product => {
-                row.innerHTML +=`<div class="col-12 col-md-4 col-lg-3  ">
+                row.innerHTML += `<div class="col-12 col-md-4 col-lg-3 h-100 ">
                     <div class="card" style="width: 18rem;">
                         <img src=${product.imageUrl} class="card-img-top img-fluid" alt="picure of ${product.name}">
                         <div class="card-body">
@@ -109,15 +119,21 @@
                             </ul>
                             <p class="card-text"> <em> Description : </em> </p>
                           <p class="card-text" style="height:5rem;overflow-y:scroll">${product.description}</p>
+                         <a href="details.html?id=${product._id}"> <button class="btn btn-info">Details! </button    </a>
                         </div>
                       </div>
                   </div>`
-                spinner.classList.toggle("d-none")
-            });
-          }
-      </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
-  </body>
+            });
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+</body>
+
 </html>

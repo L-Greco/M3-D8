@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item ">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="backoffice.html">Backoffice</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div id="row" class="row d-flex">
+            <!-- <h1 class="mx-auto"> <em>Product with Id</em> </h1>
+            <div class="col-12 mx-auto ">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Description</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur dolores non, quas
+                                illum maiores ea quos enim explicabo vel fugit? Debitis deserunt voluptates veniam sunt
+                                dicta ad necessitatibus consectetur expedita. </td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            <td>@mdo</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <a class="mx-auto" href=""> <button class="btn btn-info">Edit!</button></a> -->
+        </div>
+    </div>
+
+    <script>
+        const endpoint = " https://striveschool-api.herokuapp.com/api/product/"
+        const params = new URLSearchParams(window.location.search)
+        id = params.get("id")
+        const row = document.getElementById("row")
+
+        window.onload = async () => {
+            try {
+
+                const product = await loadProduct(id)
+                displayProduct(product)
+            } catch (error) {
+                alert(error)
+            }
+
+
+            // console.log(product);
+
+        }
+
+        const loadProduct = async function (id) {
+            try {
+                const response = await fetch(endpoint + id, {
+                    headers: {
+                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMWY1MWIxZjBmYjAwMTVkOTE3OTEiLCJpYXQiOjE2MTkwMDkzNjEsImV4cCI6MTYyMDIxODk2MX0.ImlVBcPHsjaDy0c6wfO0Kybjg-u2nPcdNJtgMQlreVc"
+                    }
+                }
+
+                )
+                product = await response.json()
+                return product
+            } catch (error) {
+                alert(error)
+
+            }
+        }
+
+        const displayProduct = function (product) {
+            row.innerHTML = ` <h1 class="mx-auto"> <em>Product with Id:${product._id}</em> </h1>
+            <div class="col-12 mx-auto ">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Description</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>    ${product.name}</td>
+                            <td>    ${product.brand}</td>
+                            <td>    ${product.price}$</td>
+                            <td><em>${product.description}</em></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <a class="mx-auto" href="backoffice.html?id=${product._id}"> <button class="btn btn-info">Edit!</button></a>`
+
+        }
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
