@@ -44,39 +44,11 @@
             <div id="spinner" class=" spinner-border text-light mx-auto" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
-
-            <!-- <h1 class="mx-auto"> <em>Product with Id</em> </h1>
-            <div class="col-12 mx-auto ">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Brand</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Description</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur dolores non, quas
-                                illum maiores ea quos enim explicabo vel fugit? Debitis deserunt voluptates veniam sunt
-                                dicta ad necessitatibus consectetur expedita. </td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-
-            </div>
-            <a class="mx-auto" href=""> <button class="btn btn-info">Edit!</button></a> -->
         </div>
     </div>
 
     <script>
-        const endpoint = " https://striveschool-api.herokuapp.com/api/product/"
+        const endpoint = "https://fakestoreapi.com/products/"
         const params = new URLSearchParams(window.location.search)
         id = params.get("id")
         const row = document.getElementById("row")
@@ -97,13 +69,7 @@
 
         const loadProduct = async function (id) {
             try {
-                const response = await fetch(endpoint + id, {
-                    headers: {
-                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMWY1MWIxZjBmYjAwMTVkOTE3OTEiLCJpYXQiOjE2MTkwMDkzNjEsImV4cCI6MTYyMDIxODk2MX0.ImlVBcPHsjaDy0c6wfO0Kybjg-u2nPcdNJtgMQlreVc"
-                    }
-                }
-
-                )
+                const response = await fetch( endpoint + id )
                 product = await response.json()
                 return product
             } catch (error) {
@@ -113,7 +79,7 @@
         }
 
         const displayProduct = function (product) {
-            row.innerHTML = ` <h1 class="mx-auto"> <em>Product with Id:${product._id}</em> </h1>
+            row.innerHTML = ` <h1 class="mx-auto"> <em>Product with Id:${product.id}</em> </h1>
             <div class="col-12 mx-auto ">
                 <table class="table" style="color:white!important;">
                     <thead>
@@ -128,18 +94,18 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>    ${product.name}</td>
-                            <td>    ${product.brand}</td>
+                            <td>    ${product.title}</td>
+                            <td>    ${product.category}</td>
                             <td>    ${product.price}$</td>
                             <td><em>${product.description}</em></td>
-                            <td>    ${product.imageUrl} 
+                            <td>    ${product.image} 
                                <span class="mx-2">
                                  <button class="btn btn-link"  style="color:black !important;" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                     Show image
                                      </button>
                               </span>
                                 <div class="collapse " id="collapseExample">
-                                    <img src="${product.imageUrl}" class="img-fluid " style="border-radius:10%">
+                                    <img src="${product.image}" class="img-fluid " style="border-radius:10%">
                                 </div>
                                     
                                 </td>
@@ -149,7 +115,7 @@
                 </table>
 
             </div>
-            <a class="mx-auto " href="backoffice.html?id=${product._id}"> <button class="btn btn-info " style="width:20rem;">Edit!</button></a>`
+            <a class="mx-auto " href="backoffice.html?id=${product.id}"> <button class="btn btn-info " style="width:20rem;">Edit!</button></a>`
 
         }
 

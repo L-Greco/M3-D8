@@ -4,7 +4,7 @@
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta title="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -16,7 +16,7 @@
 
 <body style="height: 100vh;">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-    <a class="navbar-brand" href="index.html">Kostas Shop</a>
+    <a class="navbar-category" href="index.html">Kostas Shop</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -41,18 +41,18 @@
         <form onsubmit="sumbitHandler(event)">
 
           <div class="form-group">
-            <label for="productName">Name</label>
-            <input type="text" class="form-control" id="productName" required>
+            <label for="title">title</label>
+            <input type="text" class="form-control" id="title" required>
           </div>
 
           <div class="form-group">
-            <label for="brand">Brand</label>
-            <input type="text" class="form-control" id="brand" required>
+            <label for="category">category</label>
+            <input type="text" class="form-control" id="category" required>
           </div>
 
           <div class="form-group">
-            <label for="brand">Img Url</label>
-            <input type="url" class="form-control" id="imgUrl" required>
+            <label for="category">Img Url</label>
+            <input type="url" class="form-control" id="image" required>
           </div>
 
           <div class="form-group">
@@ -78,7 +78,7 @@
   <script>
     const params = new URLSearchParams(window.location.search)
     id = params.get("id")
-    let endpoint = "https://striveschool-api.herokuapp.com/api/product/"
+    let endpoint = "https://fakestoreapi.com/products/"
     const method = id ? "PUT" : "POST"
     window.onload = async () => {
 
@@ -100,11 +100,11 @@
     }
 
     const displayProduct = function (product) {
-      document.getElementById("productName").value = product.name
+      document.getElementById("title").value = product.title
       document.getElementById("description").value = product.description
-      document.getElementById("brand").value = product.brand
+      document.getElementById("category").value = product.category
       document.getElementById("price").value = product.price
-      document.getElementById("imgUrl").value = product.imageUrl
+      document.getElementById("image").value = product.image
 
     }
 
@@ -112,21 +112,17 @@
       event.preventDefault()
 
       const newProduct = {
-        name: document.getElementById("productName").value,
+        title: document.getElementById("title").value,
         description: document.getElementById("description").value,
-        brand: document.getElementById("brand").value,
+        category: document.getElementById("category").value,
         price: document.getElementById("price").value,
-        imageUrl: document.getElementById("imgUrl").value
+        imageUrl: document.getElementById("image").value
       }
 
 
       try {
         const response = await fetch(endpoint, {
           method,
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMWY1MWIxZjBmYjAwMTVkOTE3OTEiLCJpYXQiOjE2MTkwMDkzNjEsImV4cCI6MTYyMDIxODk2MX0.ImlVBcPHsjaDy0c6wfO0Kybjg-u2nPcdNJtgMQlreVc"
-          },
           body: JSON.stringify(newProduct)
         })
         if (response.ok && !id) alert("Your product is successfully loaded!")
@@ -136,13 +132,7 @@
 
     const loadProduct = async function () {
       try {
-        const response = await fetch(endpoint, {
-          headers: {
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMWY1MWIxZjBmYjAwMTVkOTE3OTEiLCJpYXQiOjE2MTkwMDkzNjEsImV4cCI6MTYyMDIxODk2MX0.ImlVBcPHsjaDy0c6wfO0Kybjg-u2nPcdNJtgMQlreVc"
-          }
-        }
-
-        )
+        const response = await fetch( endpoint )
         product = await response.json()
         return product
       } catch (error) {
@@ -158,7 +148,6 @@
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMWY1MWIxZjBmYjAwMTVkOTE3OTEiLCJpYXQiOjE2MTkwMDkzNjEsImV4cCI6MTYyMDIxODk2MX0.ImlVBcPHsjaDy0c6wfO0Kybjg-u2nPcdNJtgMQlreVc"
             }
           })
           window.location = "backoffice.html"
